@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f4f4f5;
+}
+
+.app { /*esto es lo que le da el aspecto de mobile*/
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 1rem;
+  background: white;
+}
+
+section {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
