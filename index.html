@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Split Fácil PWA</title>
+    <title>Split Fácil PWA</title>
 
-  <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" type="image/png" href="./assets/icons/android/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="./assets/icons/android/icon-192x192.png" />
 
-  <link rel="stylesheet" href="./styles.css" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <main class="app">
-    <h1>Split Fácil</h1>
-    <p>Divide gastos entre amigos, incluso sin conexión.</p>
+    <header class="app-header">
+        <img 
+            src="./assets/icons/android/icon-192x192.png" 
+            alt="Logo de Split Fácil" 
+            class="app-logo"
+        />
+
+        <div class="app-header-content">
+            <div class="app-title-row">
+            <h1>Split Fácil</h1>
+            <span id="connectionStatus" class="status-badge status-checking">Revisando...</span>
+            </div>
+
+            <p>Divide gastos entre amigos, incluso sin conexión.</p>
+        </div>
+    </header>
 
     <section>
       <h2>Participantes</h2>
@@ -38,7 +56,6 @@
 
     <section>
       <button id="enableNotificationsBtn">Activar recordatorios</button>
-      <p id="connectionStatus"></p>
     </section>
   </main>
 

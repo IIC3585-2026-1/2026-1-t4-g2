@@ -1,3 +1,22 @@
+:root {
+  /* Colores del grupo */
+  --bg-primary: #16675f;
+  --bg-secondary: #166730;
+  --accent-light-blue: #40d6c7;
+  --accent-lighter-blue: #6ee0d4;
+  --accent-light-green: #40d670;
+  --accent-lighter-green: #6ee092;
+  --text-main: #1d1d1f;
+  --text-muted: #86868b;
+  --text-white: #ffffff;
+
+  /* Colores derivados para la interfaz */
+  --surface-main: #ffffff;
+  --surface-soft: #f1fffd;
+  --border-soft: #c8f7ef;
+  --shadow-soft: 0 8px 24px rgba(22, 103, 95, 0.16);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -5,24 +24,76 @@
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: #f4f4f5;
+  background: linear-gradient(160deg, var(--bg-primary), var(--bg-secondary));
+  color: var(--text-main);
 }
 
-.app { /*esto es lo que le da el aspecto de mobile*/
+/* Esto es lo que le da el aspecto de mobile */
+.app {
   max-width: 430px;
   min-height: 100vh;
   margin: 0 auto;
   padding: 1rem;
-  background: white;
+  background: var(--surface-main);
 }
 
+/* Header / Logo */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary),
+    var(--bg-secondary)
+  );
+  color: white;
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+}
+
+.app-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.app-header p {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.9rem;
+  color: var(--accent-lighter-blue);
+}
+
+/* Secciones tipo tarjeta */
 section {
   margin-top: 1.5rem;
   padding: 1rem;
-  border-radius: 12px;
-  background: #f8fafc;
+  border-radius: 16px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 4px 16px rgba(22, 103, 95, 0.08);
 }
 
+section h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--bg-primary);
+  font-size: 1.15rem;
+}
+
+section p {
+  color: var(--text-muted);
+}
+
+/* Inputs, selects y botones */
 input,
 select,
 button {
@@ -30,16 +101,95 @@ button {
   padding: 0.75rem;
   margin-top: 0.5rem;
   font-size: 1rem;
+  border-radius: 10px;
+}
+
+input,
+select {
+  border: 1px solid var(--border-soft);
+  background: white;
+  color: var(--text-main);
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--accent-light-blue);
+  border-color: var(--accent-light-blue);
 }
 
 button {
   border: none;
-  border-radius: 8px;
-  background: #2563eb;
-  color: white;
+  background: linear-gradient(
+    135deg,
+    var(--accent-light-blue),
+    var(--accent-light-green)
+  );
+  color: var(--text-white);
+  font-weight: 700;
   cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(22, 103, 95, 0.2);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 ul {
   padding-left: 1.2rem;
+}
+
+li {
+  margin-top: 0.4rem;
+}
+
+.app-header-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-badge::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.status-checking {
+  background: var(--accent-lighter-blue);
+  color: var(--bg-primary);
+}
+
+.status-online {
+  background: var(--accent-lighter-green);
+  color: var(--bg-secondary);
+}
+
+.status-offline {
+  background: var(--accent-lighter-blue);
+  color: var(--bg-primary);
 }

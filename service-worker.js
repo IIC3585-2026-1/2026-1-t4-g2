@@ -1,4 +1,4 @@
-const CACHE_NAME = "split-facil-cache-v1";
+const CACHE_NAME = "split-facil-cache-v7";
 
 const APP_STATIC_RESOURCES = [ //los archivos que queremos guardar para que la app cargue offline
   "./",
