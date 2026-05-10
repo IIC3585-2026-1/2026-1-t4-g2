@@ -1,4 +1,4 @@
-const CACHE_NAME = "split-facil-cache-v7";
+const CACHE_NAME = "split-facil-cache-v8";
 
 const APP_STATIC_RESOURCES = [ //los archivos que queremos guardar para que la app cargue offline
   "./",
@@ -7,8 +7,12 @@ const APP_STATIC_RESOURCES = [ //los archivos que queremos guardar para que la a
   "./app.js",
   "./storage.js",
   "./manifest.json",
+  "./service-worker.js",
   "./assets/icons/android/icon-192x192.png",
-  "./assets/icons/android/icon-512x512.png"
+  "./assets/icons/android/icon-512x512.png",
+  "./assets/icons/android/people.png",
+  "./assets/icons/android/plus.png",
+  "./assets/icons/android/list.png"
 ];
 
 self.addEventListener("install", event => { //espera a que se guarden los archivos en el cache antes de finalizar la instalación del Service Worker

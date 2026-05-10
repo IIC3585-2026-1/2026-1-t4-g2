@@ -1,65 +1,173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Split Fácil PWA</title>
 
-    <link rel="icon" type="image/png" href="./assets/icons/android/icon-192x192.png" />
-    <link rel="apple-touch-icon" href="./assets/icons/android/icon-192x192.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assets/icons/android/icon-192x192.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="./assets/icons/android/icon-192x192.png"
+    />
 
     <link rel="manifest" href="./manifest.json" />
     <meta name="theme-color" content="#ffffff" />
 
     <link rel="stylesheet" href="./styles.css" />
-</head>
-<body>
-  <main class="app">
-    <header class="app-header">
-        <img 
-            src="./assets/icons/android/icon-192x192.png" 
-            alt="Logo de Split Fácil" 
-            class="app-logo"
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Navbar Superior -->
+      <header class="app-navbar">
+        <img
+          src="./assets/icons/android/icon-192x192.png"
+          alt="Logo de Split Fácil"
+          class="navbar-logo"
         />
 
-        <div class="app-header-content">
-            <div class="app-title-row">
+        <div class="navbar-content">
+          <div class="navbar-title-row">
             <h1>Split Fácil</h1>
-            <span id="connectionStatus" class="status-badge status-checking">Revisando...</span>
-            </div>
+            <span id="connectionStatus" class="status-badge status-checking"
+              >Revisando...</span
+            >
+          </div>
 
-            <p>Divide gastos entre amigos, incluso sin conexión.</p>
+          <p>Divide gastos entre amigos</p>
         </div>
-    </header>
+      </header>
 
-    <section>
-      <h2>Participantes</h2>
-      <input id="participantName" placeholder="Nombre" />
-      <button id="addParticipantBtn">Agregar participante</button>
-      <ul id="participantsList"></ul>
-    </section>
+      <!-- Contenedor de vistas -->
+      <main class="app-content">
+        <!-- Vista: Participantes -->
+        <section id="view-participants" class="view active">
+          <div class="view-header">
+            <h2>Participantes</h2>
+          </div>
 
-    <section>
-      <h2>Gastos</h2>
-      <input id="expenseDescription" placeholder="Descripción del gasto" />
-      <input id="expenseAmount" type="number" placeholder="Monto" />
-      <select id="expensePayer"></select>
-      <button id="addExpenseBtn">Agregar gasto</button>
-      <ul id="expensesList"></ul>
-    </section>
+          <div class="form-group">
+            <input
+              id="participantName"
+              placeholder="Nombre del participante"
+              type="text"
+            />
+            <button id="addParticipantBtn" class="btn-primary">Agregar</button>
+          </div>
 
-    <section>
-      <h2>Resultado</h2>
-      <ul id="balancesList"></ul>
-    </section>
+          <ul id="participantsList" class="participants-list"></ul>
+        </section>
 
-    <section>
-      <button id="enableNotificationsBtn">Activar recordatorios</button>
-    </section>
-  </main>
+        <!-- Vista: Agregar Gasto -->
+        <section id="view-add-expense" class="view">
+          <div class="view-header">
+            <h2>Nuevo Gasto</h2>
+          </div>
 
-  <script src="./storage.js"></script>
-  <script src="./app.js"></script>
-</body>
+          <div class="form-group">
+            <input
+              id="expenseDescription"
+              placeholder="Descripción del gasto"
+              type="text"
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              id="expenseAmount"
+              placeholder="Monto en pesos"
+              type="number"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="expensePayer">¿Quién pagó?</label>
+            <select id="expensePayer"></select>
+          </div>
+
+          <div class="form-group">
+            <label>¿Quiénes deben pagar? (selecciona varios)</label>
+            <div
+              id="expenseParticipantsContainer"
+              class="participants-selector"
+            ></div>
+          </div>
+
+          <button id="addExpenseBtn" class="btn-primary btn-large">
+            Registrar gasto
+          </button>
+        </section>
+
+        <!-- Vista: Gastos -->
+        <section id="view-expenses" class="view">
+          <div class="view-header">
+            <h2>Historial de Gastos</h2>
+            <div class="balance-summary" id="balanceSummary"></div>
+          </div>
+
+          <ul id="expensesList" class="expenses-list"></ul>
+        </section>
+      </main>
+
+      <!-- Menú inferior de navegación -->
+      <nav class="app-menu">
+        <button
+          id="menu-participants"
+          class="menu-btn active"
+          data-view="participants"
+        >
+          <img
+            src="./assets/icons/android/people.png"
+            alt="Participantes"
+            class="menu-icon"
+          />
+        </button>
+
+        <button id="menu-add-expense" class="menu-btn" data-view="add-expense">
+          <img
+            src="./assets/icons/android/plus.png"
+            alt="Agregar Gasto"
+            class="menu-icon"
+          />
+        </button>
+
+        <button id="menu-expenses" class="menu-btn" data-view="expenses">
+          <img
+            src="./assets/icons/android/list.png"
+            alt="Gastos"
+            class="menu-icon"
+          />
+        </button>
+      </nav>
+    </div>
+
+    <!-- Modal de edición de gastos -->
+    <div id="editModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <h2>Editar gasto</h2>
+        <input
+          id="editExpenseDescription"
+          placeholder="Descripción del gasto"
+        />
+        <input id="editExpenseAmount" type="number" placeholder="Monto" />
+        <select id="editExpensePayer"></select>
+        <div
+          id="editExpenseParticipantsContainer"
+          class="participants-selector"
+        ></div>
+        <div class="modal-buttons">
+          <button id="saveExpenseBtn">Guardar</button>
+          <button id="cancelEditBtn">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./storage.js"></script>
+    <script src="./app.js"></script>
+  </body>
 </html>
