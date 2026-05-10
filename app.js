@@ -1,4 +1,4 @@
-//Registro del Service Worker
+// Registro del service worker para habilitar la PWA
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     try {
@@ -10,7 +10,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-//Estado online / offline
+// Estado de conexión online / offline
 function setConnectionBadge(status) {
   const connectionStatus = document.getElementById("connectionStatus");
 
@@ -58,9 +58,9 @@ window.addEventListener("offline", updateConnectionStatus);
 
 updateConnectionStatus();
 
-// ===== Lógica de Split Fácil =====
+// ===== Lógica principal de Split Fácil =====
 
-// DOM Elements
+// Referencias a elementos del DOM
 const participantName = document.getElementById("participantName");
 const addParticipantBtn = document.getElementById("addParticipantBtn");
 const participantsList = document.getElementById("participantsList");
@@ -79,29 +79,29 @@ const editExpenseParticipantsContainer = document.getElementById("editExpensePar
 const saveExpenseBtn = document.getElementById("saveExpenseBtn");
 const cancelEditBtn = document.getElementById("cancelEditBtn");
 
-// Navigation
+// Navegación entre vistas
 const menuBtns = document.querySelectorAll(".menu-btn");
 
 let appData = loadData();
 let editingExpenseIndex = null;
-let selectedParticipants = new Set(); // Track selected participants for new expense
-let editSelectedParticipants = new Set(); // Track selected participants for editing
+let selectedParticipants = new Set(); // Participantes seleccionados en el formulario de nuevo gasto
+let editSelectedParticipants = new Set(); // Participantes seleccionados en el modal de edición
 
-// ===== NAVIGATION =====
+// ===== NAVEGACIÓN =====
 function switchView(viewName) {
-  // Hide all views
+  // Ocultar todas las vistas
   document.querySelectorAll(".view").forEach(view => {
     view.classList.remove("active");
   });
 
-  // Show selected view
+  // Mostrar la vista seleccionada
   const viewId = `view-${viewName}`;
   const view = document.getElementById(viewId);
   if (view) {
     view.classList.add("active");
   }
 
-  // Update menu buttons
+  // Actualizar el estado de los botones del menú
   menuBtns.forEach(btn => {
     btn.classList.remove("active");
     if (btn.dataset.view === viewName) {
@@ -109,7 +109,7 @@ function switchView(viewName) {
     }
   });
 
-  // Clear forms when switching views
+  // Limpiar el formulario al cambiar a la vista de nuevo gasto
   if (viewName === "add-expense") {
     clearExpenseForm();
   }
@@ -122,7 +122,6 @@ menuBtns.forEach(btn => {
   });
 });
 
-// ===== PARTICIPANTES =====
 // ===== PARTICIPANTES =====
 function renderParticipants() {
   participantsList.innerHTML = "";
@@ -172,7 +171,7 @@ function renderParticipants() {
     editExpensePayer.appendChild(editOption);
   });
 
-  // Update participant selectors when participants change
+  // Actualizar botones de selección de participantes al cambiar la lista
   updateExpenseParticipantsSelector();
   updateEditExpenseParticipantsSelector();
 }
@@ -186,7 +185,7 @@ function updateExpenseParticipantsSelector() {
   }
 
   appData.participants.forEach(name => {
-    // Skip the payer from the participants list
+    // Excluir al que pagó del listado de quienes deben pagar
     if (name === payer) {
       return;
     }
@@ -220,7 +219,7 @@ function updateEditExpenseParticipantsSelector() {
   }
 
   appData.participants.forEach(name => {
-    // Skip the payer from the participants list
+    // Excluir al que pagó del listado de quienes deben pagar
     if (name === payer) {
       return;
     }
@@ -318,7 +317,7 @@ function renderExpenses() {
     return;
   }
 
-  // Sort expenses: active (not paid) first, then paid expenses
+  // Ordenar gastos: primero los activos, luego los saldados
   const sortedExpenses = appData.expenses.map((expense, originalIndex) => ({
     ...expense,
     originalIndex
@@ -326,12 +325,12 @@ function renderExpenses() {
     const aPaid = a.paid || false;
     const bPaid = b.paid || false;
 
-    // If both are paid or both are not paid, maintain original order
+    // Si ambos gastos están en el mismo estado, conservar el orden de creación
     if (aPaid === bPaid) {
       return a.originalIndex - b.originalIndex;
     }
 
-    // Active expenses (not paid) come first
+    // Los gastos activos van al inicio
     return aPaid ? 1 : -1;
   });
 
@@ -494,7 +493,7 @@ function openEditModal(index) {
     expense.participants.forEach(name => editSelectedParticipants.add(name));
   }
 
-  // Update the selector to show current selections
+  // Actualizar el selector para mostrar los participantes ya seleccionados
   updateEditExpenseParticipantsSelector();
 
   editModal.style.display = "flex";
@@ -565,7 +564,7 @@ function calculateBalances() {
   });
 
   appData.expenses.forEach(expense => {
-    // Skip paid expenses
+    // Omitir gastos ya saldados
     if (expense.paid) {
       return;
     }
@@ -647,25 +646,25 @@ addExpenseBtn.addEventListener("click", addExpense);
 saveExpenseBtn.addEventListener("click", saveEditExpense);
 cancelEditBtn.addEventListener("click", closeEditModal);
 
-// Update participant selectors when payer changes
+// Actualizar los botones de participantes cuando cambia el que pagó
 expensePayer.addEventListener("change", () => {
-  selectedParticipants.clear(); // Clear selections when payer changes
+  selectedParticipants.clear(); // Limpiar selecciones al cambiar quien pagó
   updateExpenseParticipantsSelector();
 });
 
 editExpensePayer.addEventListener("change", () => {
-  editSelectedParticipants.clear(); // Clear selections when payer changes
+  editSelectedParticipants.clear(); // Limpiar selecciones al cambiar quien pagó en el modal
   updateEditExpenseParticipantsSelector();
 });
 
-// Close modal on outside click
+// Cerrar modal al hacer clic fuera del contenido
 editModal.addEventListener("click", (e) => {
   if (e.target === editModal) {
     closeEditModal();
   }
 });
 
-// Close modal with Escape
+// Cerrar modal con la tecla Escape
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && editModal.style.display === "flex") {
     closeEditModal();

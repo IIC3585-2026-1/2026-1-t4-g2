@@ -152,11 +152,6 @@ body {
   border-color: var(--accent-light-blue);
 }
 
-.form-group select[multiple] {
-  min-height: 120px;
-  resize: vertical;
-}
-
 /* Selector de participantes */
 .participants-selector {
   display: flex;
@@ -322,25 +317,6 @@ body {
   display: block;
   font-size: 0.85rem;
   color: var(--text-muted);
-}
-
-.expense-payer-label {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-top: 0.35rem;
-}
-
-.expense-payer-select {
-  padding: 0.35rem 0.6rem;
-  border: 1px solid var(--border-soft);
-  border-radius: 8px;
-  background: white;
-  color: var(--text-main);
-  font-size: 0.85rem;
 }
 
 .expense-status {
@@ -528,11 +504,6 @@ body {
   height: 24px;
   display: block;
   object-fit: contain;
-}
-
-.menu-label {
-  font-size: 0.75rem;
-  display: block;
 }
 
 /* Modal de edición */
