@@ -1,11 +1,12 @@
 {
   "name": "Split Fácil - División de gastos",
   "short_name": "Split Fácil",
-  "theme_color": "#ffffff",
+  "theme_color": "#16675f",
   "background_color": "#ffffff",
   "display": "fullscreen",
   "orientation": "portrait",
-  "start_url": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "icons": [
     {
       "src": "assets/icons/android/icon-192x192.png",
