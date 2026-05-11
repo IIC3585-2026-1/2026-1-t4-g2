@@ -1,4 +1,4 @@
-const CACHE_NAME = "split-facil-cache-v9";
+const CACHE_NAME = "split-facil-cache-v12";
 
 const APP_STATIC_RESOURCES = [ //los archivos que queremos guardar para que la app cargue offline
   "./",
@@ -57,7 +57,6 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// Esto se ejecuta cuando llega una notificación y la app está en SEGUNDO PLANO (minimizada o cerrada)
 messaging.onBackgroundMessage(payload => {
   const { title, body } = payload.notification;
   self.registration.showNotification(title, {
