@@ -1,13 +1,13 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyBv68oIY7MSu7sD4QtpJbE9xL3XMAjApe4",
-  authDomain: "split-facil-51d83.firebaseapp.com",
-  projectId: "split-facil-51d83",
-  storageBucket: "split-facil-51d83.firebasestorage.app",
-  messagingSenderId: "48476707036",
-  appId: "1:48476707036:web:c49160e02effd5a3f6bc19"
+  apiKey: "AIzaSyB9Nv6ZFL-Iu0XFnQpbfehSEcdh9XvjVcc",
+  authDomain: "split-facil-b67dd.firebaseapp.com",
+  projectId: "split-facil-b67dd",
+  storageBucket: "split-facil-b67dd.firebasestorage.app",
+  messagingSenderId: "641019901753",
+  appId: "1:641019901753:web:8ece7eaabc0e8120031ae8"
 };
 
-const VAPID_KEY = "BN0vS2hqgesKRzIZkThyuAtSudzJFxcMWNUCXyKCAiMcqgDiQ2lig6IfFQioJYJlarrLqoM5ze_GAyGYv8VuWX4";
+const VAPID_KEY = "BB9Zv0_GEv7JW2OB73Qp0QnNQXHVqCjKpiJxbPgSeHxTjEHNua4T5t-0my_SVcx0RX3ucLDURsocp6U3dXyY9EM";
 
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
