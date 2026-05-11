@@ -20,6 +20,10 @@
     <meta name="theme-color" content="#ffffff" />
 
     <link rel="stylesheet" href="./styles.css" />
+
+    <!-- Firebase (necesario para push notifications) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script>
   </head>
   <body>
     <div class="app-container">
@@ -41,6 +45,16 @@
 
           <p>Divide gastos entre amigos</p>
         </div>
+        <!-- Botón de notificaciones en el header -->
+        <button id="notifBtn" onclick="activarNotificaciones()" title="Activar notificaciones" style="
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 0.25rem;
+          border-radius: 50%;
+          transition: background 0.2s;
+        ">🔔</button>
       </header>
 
       <!-- Contenedor de vistas -->
@@ -164,6 +178,39 @@
           <button id="saveExpenseBtn">Guardar</button>
           <button id="cancelEditBtn">Cancelar</button>
         </div>
+      </div>
+    </div>
+    <!-- Modal para mostrar el token FCM -->
+    <div id="tokenModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <h2>🔔 Notificaciones activadas</h2>
+        <p style="margin: 0.5rem 0; font-size: 0.85rem; color: #555;">
+          Copia este token y úsalo en Firebase Console para enviar una notificación de prueba:
+        </p>
+        <textarea id="tokenText" readonly style="
+          width: 100%;
+          height: 80px;
+          font-size: 0.7rem;
+          padding: 0.5rem;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          resize: none;
+          box-sizing: border-box;
+        "></textarea>
+        <button onclick="copiarToken()" class="btn-primary" style="margin-top: 0.75rem; width: 100%;">
+          Copiar token
+        </button>
+        <button onclick="document.getElementById('tokenModal').style.display='none'" style="
+          margin-top: 0.5rem;
+          width: 100%;
+          background: none;
+          border: 1px solid #ccc;
+          padding: 0.5rem;
+          border-radius: 6px;
+          cursor: pointer;
+        ">
+          Cerrar
+        </button>
       </div>
     </div>
 

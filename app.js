@@ -1,3 +1,17 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyDirok3GW5brio0Vl0pyQclT-TUU8_m4CU",
+  authDomain: "split-facil-de5e1.firebaseapp.com",
+  projectId: "split-facil-de5e1",
+  storageBucket: "split-facil-de5e1.firebasestorage.app",
+  messagingSenderId: "408953668792",
+  appId: "1:408953668792:web:c0321795768b45d51f204d"
+};
+
+const VAPID_KEY = "BCe3W02WihBKpmcOn_oN43AcY3ivUjcF5qXzJxaBzPcoxlEkqcwWYE_mtUn_7r4boa2bgOf1kYqKROb7D0ftIDQ";
+
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
 // Registro del service worker para habilitar la PWA
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
@@ -7,6 +21,58 @@ if ("serviceWorker" in navigator) {
     } catch (error) {
       console.error("Error registrando Service Worker:", error);
     }
+  });
+}
+
+// Escucha notificaciones cuando la app está en PRIMER PLANO (abierta)
+messaging.onMessage(payload => {
+  const { title, body } = payload.notification;
+  new Notification(title, {
+    body,
+    icon: "./assets/icons/android/icon-192x192.png"
+  });
+});
+
+// Función que se llama al presionar 🔔
+async function activarNotificaciones() {
+  try {
+    // 1. Pedir permiso al usuario
+    const permission = await Notification.requestPermission();
+ 
+    if (permission !== "granted") {
+      alert("Permiso denegado. Actívalo desde la configuración del navegador.");
+      return;
+    }
+ 
+    // 2. Obtener el token FCM (es como la "dirección" de este navegador para recibir mensajes)
+    const registration = await navigator.serviceWorker.ready;
+    const token = await messaging.getToken({ vapidKey: VAPID_KEY, serviceWorkerRegistration: registration });
+ 
+    console.log("Token FCM:", token);
+ 
+    // 3. Mostrar el token en el modal para que lo puedan copiar y usar en Firebase Console
+    document.getElementById("tokenText").value = token;
+    document.getElementById("tokenModal").style.display = "flex";
+ 
+    // Cambiar el botón para indicar que ya está activado
+    const btn = document.getElementById("notifBtn");
+    btn.textContent = "✅";
+    btn.title = "Notificaciones activadas";
+    btn.onclick = () => {
+      document.getElementById("tokenModal").style.display = "flex";
+    };
+ 
+  } catch (error) {
+    console.error("Error al activar notificaciones:", error);
+    alert("Error al activar notificaciones. Revisa la consola para más detalles.");
+  }
+}
+
+function copiarToken() {
+  const tokenText = document.getElementById("tokenText");
+  tokenText.select();
+  navigator.clipboard.writeText(tokenText.value).then(() => {
+    alert("¡Token copiado! Ahora ve a Firebase Console → Cloud Messaging → Nueva campaña → pega el token.");
   });
 }
 

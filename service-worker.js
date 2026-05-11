@@ -1,4 +1,4 @@
-const CACHE_NAME = "split-facil-cache-v8";
+const CACHE_NAME = "split-facil-cache-v9";
 
 const APP_STATIC_RESOURCES = [ //los archivos que queremos guardar para que la app cargue offline
   "./",
@@ -41,4 +41,27 @@ self.addEventListener("fetch", event => { //intenta responder con el recurso cac
       return cachedResponse || fetch(event.request);
     })
   );
+});
+
+importScripts("https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js");
+
+firebase.initializeApp({
+  apiKey: "AIzaSyDirok3GW5brio0Vl0pyQclT-TUU8_m4CU",
+  authDomain: "split-facil-de5e1.firebaseapp.com",
+  projectId: "split-facil-de5e1",
+  storageBucket: "split-facil-de5e1.firebasestorage.app",
+  messagingSenderId: "408953668792",
+  appId: "1:408953668792:web:c0321795768b45d51f204d"
+});
+
+const messaging = firebase.messaging();
+
+// Esto se ejecuta cuando llega una notificación y la app está en SEGUNDO PLANO (minimizada o cerrada)
+messaging.onBackgroundMessage(payload => {
+  const { title, body } = payload.notification;
+  self.registration.showNotification(title, {
+    body,
+    icon: "./assets/icons/android/icon-192x192.png"
+  });
 });
