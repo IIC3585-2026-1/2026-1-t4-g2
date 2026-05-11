@@ -623,3 +623,13 @@ body {
   background: #ff6b6b;
   color: white;
 }
+
+.notif-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: background 0.2s;
+}

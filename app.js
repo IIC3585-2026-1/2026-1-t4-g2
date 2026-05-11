@@ -24,7 +24,6 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-// Escucha notificaciones cuando la app está en PRIMER PLANO (abierta)
 messaging.onMessage(payload => {
   const { title, body } = payload.notification;
   new Notification(title, {
@@ -33,10 +32,8 @@ messaging.onMessage(payload => {
   });
 });
 
-// Función que se llama al presionar 🔔
 async function activarNotificaciones() {
   try {
-    // 1. Pedir permiso al usuario
     const permission = await Notification.requestPermission();
  
     if (permission !== "granted") {
@@ -44,17 +41,13 @@ async function activarNotificaciones() {
       return;
     }
  
-    // 2. Obtener el token FCM (es como la "dirección" de este navegador para recibir mensajes)
     const registration = await navigator.serviceWorker.ready;
     const token = await messaging.getToken({ vapidKey: VAPID_KEY, serviceWorkerRegistration: registration });
  
     console.log("Token FCM:", token);
- 
-    // 3. Mostrar el token en el modal para que lo puedan copiar y usar en Firebase Console
     document.getElementById("tokenText").value = token;
     document.getElementById("tokenModal").style.display = "flex";
  
-    // Cambiar el botón para indicar que ya está activado
     const btn = document.getElementById("notifBtn");
     btn.textContent = "✅";
     btn.title = "Notificaciones activadas";
